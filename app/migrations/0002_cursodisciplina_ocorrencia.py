@@ -15,24 +15,23 @@ class Migration(migrations.Migration):
             name='CursoDisciplina',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('carga_horaria', models.IntegerField(verbose_name='Carga horária')),
-                ('periodo', models.IntegerField(verbose_name='Período')),
+                ('carga_horaria', models.IntegerField(verbose_name='Carga horária da disciplina no curso')),
                 ('curso', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.curso', verbose_name='Curso')),
                 ('disciplina', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.disciplina', verbose_name='Disciplina')),
             ],
             options={
-                'verbose_name': 'Disciplina por Curso',
-                'verbose_name_plural': 'Disciplinas por Curso',
+                'verbose_name': 'Curso e Disciplina',
+                'verbose_name_plural': 'Cursos e Disciplinas',
             },
         ),
         migrations.CreateModel(
             name='Ocorrencia',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('descricao', models.TextField(verbose_name='Descrição da ocorrência')),
-                ('data', models.DateField(verbose_name='Data da ocorrência')),
-                ('curso', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.curso', verbose_name='Curso')),
-                ('disciplina', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.disciplina', verbose_name='Disciplina')),
+                ('descricao', models.CharField(max_length=255, verbose_name='Descrição da ocorrência')),
+                ('data_ocorrencia', models.DateField(verbose_name='Data da ocorrência')),
+                ('curso', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='app.curso', verbose_name='Curso associado')),
+                ('disciplina', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='app.disciplina', verbose_name='Disciplina associada')),
                 ('pessoa', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.pessoa', verbose_name='Pessoa envolvida')),
             ],
             options={

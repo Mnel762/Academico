@@ -171,29 +171,32 @@ class Turnos(models.Model):
 
 # Classe Ocorrencia
 class Ocorrencia(models.Model):
-    descricao = models.TextField(verbose_name="Descrição da ocorrência")
-    data = models.DateField(verbose_name="Data da ocorrência")
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, verbose_name="Curso")
-    disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE, verbose_name="Disciplina")
+    descricao = models.CharField(max_length=255, verbose_name="Descrição da ocorrência")
+    data_ocorrencia = models.DateField(verbose_name="Data da ocorrência")
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, verbose_name="Pessoa envolvida")
-
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, verbose_name="Curso associado", null=True, blank=True)
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE, verbose_name="Disciplina associada", null=True, blank=True)
+    
     def __str__(self):
-        return f"{self.pessoa.nome} - {self.descricao[:30]}..."
-
+        return f"Ocorrência de {self.pessoa.nome} - {self.descricao}"
+    
     class Meta:
         verbose_name = "Ocorrência"
         verbose_name_plural = "Ocorrências"
+
 
 # Classe CursoDisciplina
 class CursoDisciplina(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, verbose_name="Curso")
     disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE, verbose_name="Disciplina")
-    carga_horaria = models.IntegerField(verbose_name="Carga horária")
-    periodo = models.IntegerField(verbose_name="Período")
+    carga_horaria = models.IntegerField(verbose_name="Carga horária da disciplina no curso")
+    periodo = models.CharField(max_length=20, verbose_name="Período")
 
     def __str__(self):
-        return f"{self.curso.nome} - {self.disciplina.nome} (Período {self.periodo})"
+        return f"{self.curso.nome} - {self.disciplina.nome} ({self.periodo})"
 
+    
     class Meta:
-        verbose_name = "Disciplina por Curso"
-        verbose_name_plural = "Disciplinas por Curso"
+        verbose_name = "Curso e Disciplina"
+        verbose_name_plural = "Cursos e Disciplinas"
+
