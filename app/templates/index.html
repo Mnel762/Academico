@@ -101,7 +101,8 @@
                     <td>{{ pessoa.cidade.nome }}</td>
                     <td>{{ pessoa.ocupacao.nome }}</td>
 
-                    <td><a href="delete/{{ pessoas.id }}" class="btn btn-danger">Excluir</a></td>
+                    <td><a href="{% url 'delete_pessoa' pessoa.id %}" class="btn btn-danger">Excluir</a></td>
+
                 </tr>
                 {% endfor %}
             </tbody>
